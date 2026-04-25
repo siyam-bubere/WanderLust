@@ -1,0 +1,219 @@
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: #222222 !important;
+}
+
+/* Footer */
+.f-info-links a {
+  text-decoration: none;
+  color: #222222;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials, .f-info-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-info-socials i {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.f-info {
+  text-align: center;
+  height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-evenly; /**/
+}
+
+/* Cards */
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important ;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-size: 400px;
+}
+
+.listing-link {
+    text-decoration: none;
+}
+
+/* Card Effect */
+
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+.add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+.edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+.show-img {
+    height: 30vh;
+}
+
+.btns {
+    display: flex;
+}
+
+/* MAPS */
+#map {
+    height: 400px;
+    width: 100%; /* Fill the column width */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Adjust map height for smaller screens (Mobile) */
+@media (max-width: 768px) {
+    #map {
+        height: 300px;
+    }
+}
+
+/* Filters */
+
+    /* The main wrapper for the whole bar */
+/* Main wrapper to keep both divs on the same line */
+.filters-main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem; /* Gap between filter box and tax toggle */
+    margin: 1rem 0;
+}
+
+/* Your rounded filter box */
+#filters-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Rounded pill shape */
+    padding: 0.5rem 1rem;
+    flex-grow: 1; /* Allows filters to take up available space */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+#filters {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+#filters::-webkit-scrollbar {
+    display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.filter {
+    text-align: center;
+    margin-right: 2rem;
+    opacity: 0.7;
+    cursor: pointer;
+    padding-top: 10px;
+    border-bottom: 2px solid transparent; /* Placeholder for hover */
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+
+/* Hover effect: Dark underline slightly below text */
+.filter:hover {
+    opacity: 1;
+    border-bottom: 2px solid #222;
+}
+
+.filter p {
+    font-size: 0.75rem;
+    margin-bottom: 8px; /* Space between text and underline */
+}
+
+/* Tax toggle box */
+.tax-toggle {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    height: 52px;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Prevents text from wrapping to 2 lines */
+}
+
+.nav-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #717171;
+}
+
+/* Responsive: Stack vertically on very small screens */
+@media (max-width: 900px) {
+    .filters-main-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .tax-toggle {
+        justify-content: center;
+    }
+}
+
+/* serach bar */
+
