@@ -1,4 +1,4 @@
-# Wanderlust (Airbnb Clone)
+# Wanderlust
 
 Wanderlust is a full-stack web application designed as an Airbnb clone, built using the MERN stack paradigm (Express, Node.js, MongoDB, and templated EJS views). It enables users to browse premium travel stays, view locations on interactive maps, leave reviews, and make mock reservations with integrated payment checkouts.
 
