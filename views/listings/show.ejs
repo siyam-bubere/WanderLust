@@ -1,40 +1,76 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="row mt-3">
-  <div class="col-8 offset-3">
+  <div class="col-8 offset-md-2">
     <h3><%= listing.title %></h3>
   </div>
 
-  <div class="card col-6 offset-3 show-card listing-card border-0">
-    <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image" />
-    <div class="card-body px-0">
+  <div class="col-10 offset-md-2 mb-3">
+    <img src="<%= listing.image.url %>" class="show-img img-fluid rounded" alt="listing_image" style="max-height: 400px; width: 80%; object-fit: cover;" />
+  </div>
+
+  <!-- Left: Listing Details -->
+  <div class="col-md-5 offset-md-2">
+    <div class="px-0">
       <p class="card-text">
-        posted by @<i><%= listing.owner.username %></i>
+        Posted by @<i><%= listing.owner.username %></i>
         <br>
         <p class="text-muted"><%= listing.description %> </p> <br />
-        <span class="fw-bold mt-2 d-inline-block">&#8377; <%= listing.price.toLocaleString("en-IN") %></span> <br />
+        <span class="fw-bold mt-2 d-inline-block">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</span> <br />
         <%= listing.location %>, <%= listing.country %>
       </p>
     </div>
+
+    <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+      <div class="btns mt-3 mb-5">
+        <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark edit-btn px-4">Edit</a>
+        <form action="/listings/<%=listing._id%>?_method=DELETE" method="POST" class="d-inline ms-3">
+          <button class="btn btn-danger px-4">Delete</button>
+        </form>
+      </div>
+    <% } %>
   </div>
 
-  <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
-    <div class="btns mb-5">
-      <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+  <!-- Right: Booking Widget -->
+  <div class="col-md-3 ms-md-4 mb-5">
+    <div class="card p-4 shadow border-0 rounded-3 bg-white sticky-top" style="top: 100px; z-index: 10;">
+      <h4 class="mb-3 text-dark font-weight-bold">Reserve this stay</h4>
+      <form action="/listings/<%= listing._id %>/bookings" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="check-in" class="form-label text-muted small">Check-in Date</label>
+          <input type="date" id="check-in" name="booking[checkIn]" class="form-control" required min="<%= new Date().toISOString().split('T')[0] %>" />
+          <div class="invalid-feedback">Please select a valid check-in date.</div>
+        </div>
+        <div class="mb-3">
+          <label for="check-out" class="form-label text-muted small">Check-out Date</label>
+          <input type="date" id="check-out" name="booking[checkOut]" class="form-control" required />
+          <div class="invalid-feedback">Please select a valid check-out date.</div>
+        </div>
+        
+        <div class="price-breakdown mb-3 d-none" id="price-box">
+          <hr>
+          <div class="d-flex justify-content-between text-muted small mb-1">
+            <span id="rate-calc">&#8377; <%= listing.price %> x 1 night</span>
+            <span id="sub-total">&#8377; <%= listing.price %></span>
+          </div>
+          <div class="d-flex justify-content-between font-weight-bold text-dark border-top pt-2">
+            <span>Total Price</span>
+            <span id="grand-total">&#8377; <%= listing.price %></span>
+          </div>
+        </div>
 
-      <form action="/listings/<%=listing._id%>?_method=DELETE" method="POST" class="d-inline">
-        <button class="btn btn-dark offset-3">Delete</button>
+        <% if (currUser) { %>
+          <button type="submit" class="btn btn-danger w-100 py-2 fw-bold" style="background-color: #fe424d; border-color: #fe424d;">Reserve Stay</button>
+        <% } else { %>
+          <a href="/login" class="btn btn-secondary w-100 py-2 fw-bold">Login to Reserve</a>
+        <% } %>
       </form>
     </div>
-  <% } %>
+  </div>
 
-  <!-- <% if(currUser) { %>
+  <hr class="col-8 offset-md-2" />
 
-  <hr class="col-6 offset-3" />
-
-  <% } %> -->
-    
-  <div class="col-6 offset-3 mb-3">
+  <div class="col-8 offset-md-2 mb-3">
     <% if(currUser) { %>
     <h4>Leave a Review</h4>
     <form action="/listings/<%=listing._id%>/reviews" method="POST" novalidate class="needs-validation">
@@ -42,7 +78,6 @@
       <div class="mb-3 mt-3">
       <label for="rating" class="form-label">Rating</label>
       <fieldset class="starability-basic">
-        
         <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
         <input type="radio" id="second-rate1" name="review[rating]" value="1" />
         <label for="second-rate1" title="Terrible">1 star</label>
@@ -70,12 +105,11 @@
     <p><b>All Reviews</b></p>
 
     <% if(listing.reviews.length > 0) { %>
-    
     <div class="row">
       <% for(review of listing.reviews) { %>
       <div class="card col-5 ms-3 mb-3 p-3 shadow-sm border-0">
         <div class="card-body">
-          <h5 class="card-title text-primary">@<%= review.author.username %>></h5>
+          <h5 class="card-title text-primary">@<%= review.author.username %></h5>
           <p class="card-text text-warning small">
             <% for(let i=0; i<review.rating; i++) { %>★<% } %><% for(let i=review.rating; i<5; i++) { %>☆<% } %>
           </p>
@@ -94,6 +128,7 @@
       <p>No reviews available at the moment.</p>
     <% } %>
   </div>
+  
   <div class="col-12 col-md-8 offset-md-2 mb-3">
     <h5 class="mb-3"><b>Where you'll be</b></h5>
     <div id="map"></div>
@@ -102,9 +137,45 @@
 
 <script>
     const mapToken = "<%= mapToken %>";
-    // Provide a fallback [Longitude, Latitude] if geometry is missing
     const listing = <%- JSON.stringify(listing) %>;
+
+    // Dynamically calculate and display booking price breakdown in the widget
+    const checkInInput = document.getElementById("check-in");
+    const checkOutInput = document.getElementById("check-out");
+    const priceBox = document.getElementById("price-box");
+    const rateCalc = document.getElementById("rate-calc");
+    const subTotal = document.getElementById("sub-total");
+    const grandTotal = document.getElementById("grand-total");
+    const basePrice = <%= listing.price %>;
+
+    function updatePrice() {
+      const checkInVal = checkInInput.value;
+      const checkOutVal = checkOutInput.value;
+      if (checkInVal && checkOutVal) {
+        const d1 = new Date(checkInVal);
+        const d2 = new Date(checkOutVal);
+        const diffTime = d2.getTime() - d1.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays > 0) {
+          priceBox.classList.remove("d-none");
+          rateCalc.innerText = `₹ ${basePrice.toLocaleString("en-IN")} x ${diffDays} night${diffDays > 1 ? 's' : ''}`;
+          const finalCost = basePrice * diffDays;
+          subTotal.innerText = `₹ ${finalCost.toLocaleString("en-IN")}`;
+          grandTotal.innerText = `₹ ${finalCost.toLocaleString("en-IN")}`;
+        } else {
+          priceBox.classList.add("d-none");
+        }
+      } else {
+        priceBox.classList.add("d-none");
+      }
+    }
+
+    checkInInput.addEventListener("change", (e) => {
+      checkOutInput.min = e.target.value;
+      updatePrice();
+    });
+    checkOutInput.addEventListener("change", updatePrice);
 </script>
 
 <script src="/js/map.js"></script>
-

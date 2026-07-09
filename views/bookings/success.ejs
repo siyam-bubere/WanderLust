@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-5 justify-content-center">
+  <div class="col-md-6 col-sm-10">
+    <div class="card p-5 border-0 shadow text-center rounded-3 bg-white">
+      <div class="mb-4">
+        <!-- SVG Success Checkmark -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" fill="#10b981" class="bi bi-check-circle-fill d-inline-block" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+      </div>
+      
+      <h2 class="text-dark font-weight-bold mb-2">Booking Confirmed!</h2>
+      <p class="text-muted mb-4">Your stay has been successfully reserved. A confirmation receipt has been sent to your email.</p>
+
+      <div class="invoice-box text-start p-4 bg-light rounded-3 mb-4">
+        <h5 class="text-primary border-bottom pb-2 mb-3">Reservation Details</h5>
+        <div class="row mb-2">
+          <div class="col-6 text-muted">Destination:</div>
+          <div class="col-6 fw-bold text-dark text-end"><%= booking.listing.title %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6 text-muted">Location:</div>
+          <div class="col-6 text-dark text-end"><%= booking.listing.location %>, <%= booking.listing.country %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6 text-muted">Check-in:</div>
+          <div class="col-6 text-dark text-end"><%= booking.checkIn.toLocaleDateString() %></div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6 text-muted">Check-out:</div>
+          <div class="col-6 text-dark text-end"><%= booking.checkOut.toLocaleDateString() %></div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-6 text-muted fw-bold">Amount Paid (Stripe):</div>
+          <div class="col-6 text-danger fw-bold text-end" style="font-size: 1.15em;">&#8377; <%= booking.totalPrice.toLocaleString("en-IN") %></div>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2">
+        <a href="/bookings/my-reservations" class="btn btn-primary btn-lg fw-bold" style="background-color: #fe424d; border-color: #fe424d;">View My Bookings</a>
+        <a href="/listings" class="btn btn-outline-secondary">Go to Explore</a>
+      </div>
+    </div>
+  </div>
+</div>

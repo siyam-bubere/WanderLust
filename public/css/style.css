@@ -70,10 +70,25 @@ body {
     border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important ;
+    transition: transform 0.3s ease-in-out;
+}
+
+.listing-card {
+    overflow: hidden;
+    border-radius: 1rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.listing-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.listing-card:hover .card-img-top {
+    transform: scale(1.03);
 }
 
 .card-body {
-    padding: 0 !important;
+    padding: 0.5rem 0 !important;
 }
 
 .card-text p {
@@ -88,10 +103,11 @@ body {
 
 .card-img-overlay {
     opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .card-img-overlay:hover {
-    opacity: 0.2;
+    opacity: 0.15;
     background-color: white;
 }
 
